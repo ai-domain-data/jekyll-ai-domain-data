@@ -1,0 +1,37 @@
+# Example Jekyll _config.yml configuration for jekyll-ai-domain-data
+
+# Add to your plugins list
+plugins:
+  - jekyll-ai-domain-data
+
+# Basic site configuration (used as fallbacks)
+title: "My Awesome Site"
+description: "A concise description of your site or organization"
+url: "https://example.com"
+email: "contact@example.com"
+
+# AI Domain Data configuration
+ai_domain_data:
+  # Set to false to disable generation
+  enabled: true
+  
+  # Required fields (will fall back to site.title, site.description, etc. if not set)
+  name: "My Awesome Site"  # Optional: defaults to site.title
+  description: "A concise description of your site or organization"  # Optional: defaults to site.description
+  website: "https://example.com"  # Optional: defaults to site.url (will add https:// if missing)
+  contact: "contact@example.com"  # Required: no fallback, must be set
+  
+  # Optional fields
+  logo: "https://example.com/logo.png"
+  entity_type: "Organization"  # Valid values: Organization, Person, Blog, NGO, Community, Project, CreativeWork, SoftwareApplication, Thing
+  
+  # Optional: Embedded JSON-LD block for schema.org alignment
+  jsonld:
+    "@context": "https://schema.org"
+    "@type": "Organization"
+    "name": "My Awesome Site"
+    "url": "https://example.com"
+    "logo": "https://example.com/logo.png"
+    "email": "contact@example.com"
+    "description": "A concise description of your site or organization"
+
