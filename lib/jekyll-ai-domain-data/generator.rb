@@ -73,12 +73,19 @@ module Jekyll
         File.write(output_path, JSON.pretty_generate(profile) + "\n")
 
         # Register the file with Jekyll so it gets copied to the destination
-        site.static_files << Jekyll::StaticFile.new(
-          site,
-          site.source,
-          ".well-known",
-          "domain-profile.json"
-        )
+        # Check if it's already registered to avoid duplicates
+        existing = site.static_files.find do |file|
+          file.relative_path == "/.well-known/domain-profile.json"
+        end
+        
+        unless existing
+          site.static_files << Jekyll::StaticFile.new(
+            site,
+            site.source,
+            ".well-known",
+            "domain-profile.json"
+          )
+        end
       end
     end
   end
