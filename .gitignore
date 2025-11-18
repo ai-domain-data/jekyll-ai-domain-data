@@ -25,3 +25,9 @@ Gemfile.lock
 *~
 .DS_Store
 
+# Submission and announcement files (not for public repo)
+SUBMISSION_GUIDE.md
+SUBMISSION_CHECKLIST.md
+ANNOUNCEMENT_TEMPLATE.md
+demo-site/
+
