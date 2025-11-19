@@ -4,7 +4,6 @@ module Jekyll
   module AIDomainData
     # JSON Schema for AI Domain Data Standard v0.1.1
     SCHEMA = {
-      "$schema" => "https://json-schema.org/draft/2020-12/schema",
       "$id" => "https://ai-domain-data.org/spec/schema-v0.1.json",
       "title" => "AI Domain Data v0.1.1",
       "type" => "object",
