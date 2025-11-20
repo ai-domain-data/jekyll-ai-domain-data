@@ -106,6 +106,72 @@ You can also access domain data in your templates using the `ai_domain_data` tag
 </script>
 ```
 
+### CORS Configuration
+
+To allow cross-origin requests (required for tools like the [AI Domain Data checker](https://ai-domain-data.org/checker)), you need to configure CORS headers at your hosting provider level. The plugin generates a static file, so headers must be set by your web server or hosting platform.
+
+#### GitHub Pages
+
+GitHub Pages doesn't support custom headers. The file will be accessible, but cross-origin requests may be limited. Consider using a different hosting provider if CORS is required.
+
+#### Netlify
+
+Add to `netlify.toml` in your site root:
+
+```toml
+[[headers]]
+  for = "/.well-known/domain-profile.json"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type"
+```
+
+#### Apache
+
+Add to `.htaccess` in your site root:
+
+```apache
+<FilesMatch "domain-profile\.json$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</FilesMatch>
+```
+
+#### Nginx
+
+Add to your server configuration:
+
+```nginx
+location ~* \.well-known/domain-profile\.json$ {
+    add_header Access-Control-Allow-Origin *;
+    add_header Access-Control-Allow-Methods "GET, OPTIONS";
+    add_header Access-Control-Allow-Headers "Content-Type";
+}
+```
+
+#### Vercel
+
+Add to `vercel.json` in your site root:
+
+```json
+{
+  "headers": [
+    {
+      "source": "/.well-known/domain-profile.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+      ]
+    }
+  ]
+}
+```
+
+**Note:** Without CORS headers, the domain profile will still be accessible via direct URL, but cross-origin tools (like the checker) may be blocked by browser security policies.
+
 ## Validation
 
 The plugin validates your configuration against the AI Domain Data Standard schema before generating the file. If validation fails, you'll see warnings in the build output and the file won't be generated.
